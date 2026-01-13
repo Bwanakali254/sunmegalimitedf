@@ -1,8 +1,8 @@
 import { ShopContext } from "./ShopContext";
-import { products } from "../assets/assets";
 import { useState, useEffect } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom"; 
+import axios from "axios";
 
 
 
@@ -11,34 +11,55 @@ const ShopContextProvider = (props) => {
     const currency = "KES";
     const deliveryFee = 10;
     const taxes = 0.1;
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
     const [search,setSearch] = useState("");
     const [showSearch,setShowSearch] = useState(false);
-    const [cartItems, setCartItems] = useState([]);
+    const [cartItems, setCartItems] = useState({});
+    const [products, setProducts] = useState([]);
+    const [token,setToken] = useState('');
+    const [user, setUser] = useState(null);
+    const [isCartLoading, setIsCartLoading] = useState(false);
     const navigate = useNavigate();
     
-    const addToCart =async (itemId,size) => {
+    const addToCart =async (itemId,quantity) => {
 
-        if (!size) {
-            toast.error("Please select a size");
+        if (!quantity) {
+            toast.error("Please select a quantity");
             return;
         }
             
         let cartData = structuredClone(cartItems);
 
         if (cartData[itemId]) {
-            if (cartData[itemId][size]) {
-                cartData[itemId][size] += 1;
+            if (cartData[itemId][quantity]) {
+                cartData[itemId][quantity] += 1;
             }
             else {
-                cartData[itemId][size] = 1;
+                cartData[itemId][quantity] = 1;
             }
         }
         else {
             cartData[itemId] = {};
-            cartData[itemId][size] = 1;
+            cartData[itemId][quantity] = 1;
         }
         setCartItems(cartData);
         toast.success("Product added to cart!");
+        
+        if (token) {
+            try {
+
+                await axios.post(backendUrl + "/api/cart/add", {itemId, quantity}, {headers:{token}})
+                
+
+            } catch (error) {
+                console.log(error)
+                toast.error(error.message)
+            }
+
+            
+            
+        }
+
     };
 
     const getCartCount = () => {
@@ -58,13 +79,36 @@ const ShopContextProvider = (props) => {
         return totalCount;
     }
 
-    const updateQuantity = async (itemId,size,quantity) => {
+    const updateQuantity = async (itemId, sizeKey, newQuantity) => {
 
         let cartData = structuredClone(cartItems);
 
-        cartData[itemId][size] = quantity;
+        if (newQuantity === 0) {
+            if (cartData[itemId] && cartData[itemId][sizeKey]) {
+                delete cartData[itemId][sizeKey];
+                if (Object.keys(cartData[itemId]).length === 0) {
+                    delete cartData[itemId];
+                }
+            }
+        } else {
+            if (!cartData[itemId]) {
+                cartData[itemId] = {};
+            }
+            cartData[itemId][sizeKey] = newQuantity;
+        }
 
         setCartItems(cartData);
+
+        if (token) {
+            try {
+
+                await axios.post(backendUrl + '/api/cart/update', {itemId, sizeKey, newQuantity}, {headers:{token}})
+                
+            } catch (error) {
+                console.log(error)
+                toast.error(error.message)
+            }
+        }
     }
 
     useEffect(() => {
@@ -88,6 +132,76 @@ const ShopContextProvider = (props) => {
         return totalAmount;
     };
 
+
+    const getProductsData = async () => {
+        try {
+
+             const response = await axios.get(backendUrl + "/api/product/list");
+             if(response.data.success){
+                setProducts(response.data.products);
+             } else {
+                toast.error(response.data.message);
+             }
+
+        } catch (error) {
+            console.log(error)
+            toast.error(error.message)
+        }
+    }
+
+    const getUserCart = async (token) => {
+        try {
+
+            const response = await axios.post(backendUrl +'/api/cart/get',{},{headers:{token}})
+            if (response.data.success) {
+                setCartItems(response.data.cartData)
+            }
+
+        } catch (error) {
+            console.log(error)
+            toast.error(error.message)
+        }
+    }
+
+    const fetchUserProfile = async (token) => {
+        try {
+            const response = await axios.get(backendUrl + '/api/user/profile', { headers: { token } });
+            if (response.data.success) {
+                setUser(response.data.user);
+            } else {
+                // If user not found, clear token and user state
+                if (response.data.message === "User not found") {
+                    localStorage.removeItem('token');
+                    setToken('');
+                    setUser(null);
+                }
+                throw new Error(response.data.message || 'Failed to fetch profile');
+            }
+        } catch (error) {
+            console.log(error);
+            // Re-throw so Profile page can handle it
+            throw error;
+        }
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // Intentionally empty deps: getProductsData should run once on mount
+    useEffect(() => {
+        getProductsData();
+    },[]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // Intentionally empty deps: should run once on mount to restore token and cart from localStorage
+    useEffect(() => {
+        const storedToken = localStorage.getItem('token');
+        if (storedToken) {
+           if (!token) {
+               setToken(storedToken); 
+           }
+           getUserCart(storedToken);
+           fetchUserProfile(storedToken);
+        }
+    },[])
     
     const value ={
         products,
@@ -100,10 +214,18 @@ const ShopContextProvider = (props) => {
         setShowSearch,
         cartItems,
         addToCart,
+        setCartItems,
         getCartCount,
         updateQuantity,
         getCartAmount,
         navigate,
+        backendUrl,
+        setToken,
+        token,
+        user,
+        setUser,
+        fetchUserProfile,
+        isCartLoading
 
     };
 

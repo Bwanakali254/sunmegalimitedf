@@ -86,7 +86,7 @@ const Product = () => {
               </div>
             </div>
             <div className='flex gap-4'>
-              <button onClick={() => handleAddToCart(ProductData._id)} className='bg-green-500 text-white active:bg-amber-500 px-8 py-3 rounded text-sm font-medium'>Add to Cart</button>
+              <button onClick={() => handleAddToCart(ProductData._id)} className='bg-green-500 text-white active:bg-amber-500 hover:bg-amber-500 px-8 py-3 rounded text-sm font-medium cursor-pointer'>Add to Cart</button>
               <button onClick={() => handleBuyNow(ProductData._id)} className='border border-green-500 text-green-500 active:bg-gray-400 px-8 py-3 rounded text-sm font-medium'>Buy Now</button>
             </div>
             <hr className='mt-8 sm:w-4/5' />

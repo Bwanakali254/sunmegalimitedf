@@ -40,7 +40,7 @@ import cv_img1 from './products/converters/cv_img1.png'
 import cv_img2 from './products/converters/cv_img2.png'
 
 // Energy Storage Systems
-import s_img1 from './products/energy-storage-systems/s_img1.png'
+import s_img1_1 from './products/energy-storage-systems/s_img1_1.png'
 import s_img1_2 from './products/energy-storage-systems/s_img1_2.png'
 import s_img1_3 from './products/energy-storage-systems/s_img1_3.png'
 import s_img1_4 from './products/energy-storage-systems/s_img1_4.png'
@@ -114,7 +114,7 @@ export const assets = {
     cv_img1,
     cv_img2,
     // Energy Storage Systems
-    s_img1,
+    s_img1_1,
     s_img1_2,
     s_img1_3,
     s_img1_4,
@@ -398,7 +398,7 @@ export const products = [
     name: "Single Phase Hybrid Inverter 3-8kW",
     description: "Versatile single-phase hybrid inverter system with 3-8kW power range. Combines solar inverter, battery charger, and grid-tie functionality in one compact unit for residential energy independence.",
     price: "95000",
-    image: [s_img1, s_img1_2, s_img1_3, s_img1_4],
+    image: [s_img1_1, s_img1_2, s_img1_3, s_img1_4],
     category: "energy-storage-systems",
     subCategory: "single-phase-hybrid-inverter-3-8kw",
     brand: "koyoe",
