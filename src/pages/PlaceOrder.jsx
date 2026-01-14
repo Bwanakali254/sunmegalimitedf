@@ -4,10 +4,9 @@ import CartTotal from "../components/CartTotal";
 import { assets } from "../assets/assets";
 import { ShopContext } from "../context/ShopContext";
 import { toast } from "react-toastify";
-
+import axios from "axios";
 
 const PlaceOrder = () => {
-
   const {
     cartItems,
     setCartItems,
@@ -60,6 +59,19 @@ const PlaceOrder = () => {
         amount: getCartAmount() + deliveryFee,
       };
 
+      const res = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/order/place`,
+        OrderData,
+        {
+          headers: {
+            token: localStorage.getItem("token"),
+          },
+        }
+      );
+
+      if (res.data.success && res.data.redirect_url) {
+        window.location.href = res.data.redirect_url;
+      }
     } catch (error) {
       console.log(error);
       toast.error(error.message);
