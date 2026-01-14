@@ -16,11 +16,11 @@ const PaymentCallback = () => {
 
     axios
       .get(`${import.meta.env.VITE_BACKEND_URL}/api/pesapal/status`, {
-        params: { orderTrackingId }
+        params: { orderTrackingId },
       })
-      .then(res => {
+      .then((res) => {
         if (res.data.success) {
-          setStatus(res.data.status);
+          setStatus(res.data.status || "PENDING");
         } else {
           setStatus("error");
         }
