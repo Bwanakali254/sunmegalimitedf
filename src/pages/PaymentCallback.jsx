@@ -20,7 +20,12 @@ const PaymentCallback = () => {
       })
       .then((res) => {
         if (res.data.success) {
-          setStatus(res.data.status || "PENDING");
+          const rawStatus = res.data.status;
+          const normalizedStatus = rawStatus
+            ? rawStatus.toUpperCase()
+            : "PENDING";
+
+          setStatus(normalizedStatus);
         } else {
           setStatus("error");
         }
