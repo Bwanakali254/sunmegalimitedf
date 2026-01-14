@@ -15,9 +15,8 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import SearchBar from "./components/SearchBar";
 import { ToastContainer } from "react-toastify";
-import PaymentSuccess from "./pages/PaymentSuccess";
-import PaymentFailure from "./pages/PaymentFailure";
 import ErrorBoundary from "./components/ErrorBoundary";
+import PaymentCallback from "./pages/PaymentCallback";
 
 const App = () => {
   return (
@@ -38,9 +37,7 @@ const App = () => {
           <Route path="/orders" element={<Orders />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/verify-otp" element={<VerifyOTP />} />
-          <Route path="/payment-success" element={<PaymentSuccess />} />
-          <Route path="/payment-callback" element={<PaymentSuccess />} />
-          <Route path="/payment-failure" element={<PaymentFailure />} />
+          <Route path="/payment-callback" element={<PaymentCallback />} />
         </Routes>
       </ErrorBoundary>
       <Footer />
