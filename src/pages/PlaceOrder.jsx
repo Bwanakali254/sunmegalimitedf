@@ -1,101 +1,14 @@
-import React, { useContext, useState } from "react";
+
 import Title from "../components/Title";
 import CartTotal from "../components/CartTotal";
 import { assets } from "../assets/assets";
 import { ShopContext } from "../context/ShopContext";
-import { toast } from "react-toastify";
-import axios  from "axios"
+
 
 const PlaceOrder = () => {
-  const [method, setMethod] = useState("pesapal");
-  const {
-    navigate,
-    backendUrl,
-    token,
-    cartItems,
-    setCartItems,
-    getCartItems,
-    getCartAmount,
-    deliveryFee,
-    products,
-  } = useContext(ShopContext);
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    street: "",
-    city: "",
-    state: "",
-    zipcode: "",
-    country: "",
-    phone: "",
-  });
-
-  const onChangeHandler = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-
-    setFormData((data) => ({ ...data, [name]: value }));
-  };
-
-  const onSubmitHandler = async (e) => {
-    e.preventDefault();
-    try {
-      let orderItems = [];
-
-      for (const items in cartItems) {
-        for (const item in cartItems[items]) {
-          if (cartItems[items][item] > 0) {
-            const itemInfo = structuredClone(
-              products.find((product) => product._id === items)
-            );
-            if (itemInfo) {
-              itemInfo.quantity = cartItems[items][item];
-              orderItems.push(itemInfo);
-            }
-          }
-        }
-      }
-
-      let OrderData = {
-        address: formData,
-        items: orderItems,
-        amount: getCartAmount() + deliveryFee,
-      };
-
-      switch (method) {
-        // Api calls for pesapal
-        case "pesapal":
-          try {
-            const response = await axios.post(
-              backendUrl + "/api/order/pesapal",
-              OrderData,
-              { headers: { token } }
-            );
-
-            if (response.data.success) {
-              // Redirect user to Pesapal payment page
-              window.location.href = response.data.redirect_url;
-            } else {
-              toast.error(response.data.message);
-            }
-          } catch (error) {
-            console.log(error);
-            toast.error(error.message);
-          }
-          break;
-        default:
-          toast.error("Payment method not selected");
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error(error.message);
-    }
-  };
-
   return (
     <form
-      onSubmit={onSubmitHandler}
+      
       className="flex flex-col sm:flex-row justify-between gap-4 pt-5 sm:pt-14 min-h-[80vh] border-t"
     >
       {/* Left Side */}
@@ -105,18 +18,15 @@ const PlaceOrder = () => {
         </div>
         <div className="flex gap-3">
           <input
-            onChange={onChangeHandler}
-            name="firstName"
-            value={formData.firstName}
+            
             className="border border-green-300 rounded py-1.5 px-3.5 w-full "
             type="text"
             placeholder="First Name"
             required
           />
           <input
-            onChange={onChangeHandler}
-            name="lastName"
-            value={formData.lastName}
+            
+            
             className="border border-green-300 rounded py-1.5 px-3.5 w-full "
             type="text"
             placeholder="Last Name"
@@ -124,18 +34,14 @@ const PlaceOrder = () => {
           />
         </div>
         <input
-          onChange={onChangeHandler}
-          name="email"
-          value={formData.email}
+          
           className="border border-green-300 rounded py-1.5 px-3.5 w-full "
           type="email"
           placeholder="Email Address"
           required
         />
         <input
-          onChange={onChangeHandler}
-          name="street"
-          value={formData.street}
+          
           className="border border-green-300 rounded py-1.5 px-3.5 w-full "
           type="text"
           placeholder="Street"
@@ -143,18 +49,14 @@ const PlaceOrder = () => {
         />
         <div className="flex gap-3">
           <input
-            onChange={onChangeHandler}
-            name="city"
-            value={formData.city}
+            
             className="border border-green-300 rounded py-1.5 px-3.5 w-full "
             type="text"
             placeholder="City"
             required
           />
           <input
-            onChange={onChangeHandler}
-            name="state"
-            value={formData.state}
+            
             className="border border-green-300 rounded py-1.5 px-3.5 w-full "
             type="text"
             placeholder="State"
@@ -163,18 +65,14 @@ const PlaceOrder = () => {
         </div>
         <div className="flex gap-3">
           <input
-            onChange={onChangeHandler}
-            name="zipcode"
-            value={formData.zipcode}
+            
             className="border border-green-300 rounded py-1.5 px-3.5 w-full "
             type="text"
             placeholder="Zip Code"
             required
           />
           <input
-            onChange={onChangeHandler}
-            name="country"
-            value={formData.country}
+            
             className="border border-green-300 rounded py-1.5 px-3.5 w-full "
             type="text"
             placeholder="Country"
@@ -182,9 +80,7 @@ const PlaceOrder = () => {
           />
         </div>
         <input
-          onChange={onChangeHandler}
-          name="phone"
-          value={formData.phone}
+          
           className="border border-green-300 rounded py-1.5 px-3.5 w-full "
           type="text"
           placeholder="Phone Number"
