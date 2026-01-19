@@ -18,6 +18,7 @@ const Navbar = () => {
      }
 
   return (
+   
     <div className='flex items-center justify-between py-5 font-medium'>
 
         <Link to='/'> 
@@ -46,7 +47,7 @@ const Navbar = () => {
         <div className='flex items-center gap-6'>
             <img src={assets.searchIcon} alt="search" className='w-5 cursor-pointer' onClick={() => setShowSearch(true)}/>
 
-            <div className='group relative'>
+            <div className='group relative z-50'>
                 <img onClick={()=> token ? null : navigate('/login')} src={assets.profileIcon} alt="profile" className='w-5 cursor-pointer' />
                 {/* Dropdown Menu */}
                 {token && 

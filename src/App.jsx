@@ -17,11 +17,13 @@ import SearchBar from "./components/SearchBar";
 import { ToastContainer } from "react-toastify";
 import ErrorBoundary from "./components/ErrorBoundary";
 import PaymentCallback from "./pages/PaymentCallback";
+import HeroQuoteWidget from "./components/HeroQuoteWidget"; // Add this import
 
 const App = () => {
   return (
     <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw] xl:px-[10vw]">
       <ToastContainer />
+      <HeroQuoteWidget /> {/* Add this line here */}
       <Navbar />
       <SearchBar />
       <ErrorBoundary>
