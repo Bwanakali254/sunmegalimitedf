@@ -8,10 +8,17 @@ const Hero = () => {
 
   return (
     <div>
-      <div className="flex flex-col sm:flex-row border border-green-500">
-        {/* hero left side */}
-        <div className="w-full sm:w-1/2 flex items-center justify-center py-10 sm:py-0 px-4">
-          <div className="text-[#414141] max-w-lg">
+      <div className="relative border border-green-500">
+        {/* hero image as full-width background */}
+        <img
+          className="w-full h-[500px] sm:h-[600px] object-cover"
+          src={assets.hero}
+          alt="Solar installation"
+        />
+        
+        {/* left side content positioned over the image */}
+        <div className="absolute inset-0 flex items-center justify-start py-10 sm:py-0 px-4 sm:px-8 md:px-12 lg:px-16">
+          <div className="text-[#414141] max-w-lg bg-white/80 backdrop-blur-sm p-6 sm:p-8 rounded-lg">
             <div className="flex items-center gap-2">
               <p className="w-8 md:w-11 h-0.5 bg-[#414141]"></p>
               <p className="font-medium text-sm md:text-base">
@@ -36,13 +43,6 @@ const Hero = () => {
             </div>
           </div>
         </div>
-
-        {/* hero right side */}
-        <img
-          className="w-full sm:w-1/2 object-cover"
-          src={assets.hero}
-          alt=""
-        />
       </div>
 
       <HeroQuoteWidget />
