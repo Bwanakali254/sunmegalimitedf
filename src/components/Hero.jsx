@@ -17,7 +17,7 @@ const Hero = () => {
         />
         
         {/* left side content positioned over the image */}
-        <div className="absolute inset-0 flex items-center justify-start py-10 sm:py-0 px-4 sm:px-8 md:px-12 lg:px-16">
+        <div className="absolute inset-0 flex items-center justify-start py-9 sm:py-0 px-4 sm:px-8 md:px-12 lg:px-16">
           <div className="text-[#414141] max-w-lg bg-white/80 backdrop-blur-sm p-6 sm:p-8 rounded-lg">
             <div className="flex items-center gap-2">
               <p className="w-8 md:w-11 h-0.5 bg-[#414141]"></p>
@@ -26,7 +26,7 @@ const Hero = () => {
               </p>
             </div>
 
-            <h1 className="text-3xl sm:py-3 lg:text-2xl text-gray-500 leading-relaxed">
+            <h1 className="text-2xl sm:py-2 lg:text-2xl text-gray-500 leading-relaxed">
               Wholesale & Retail Solar Solutions <br />
               Installation, Maintenance, and <br />
               Sustainable Energy for Every Space.
