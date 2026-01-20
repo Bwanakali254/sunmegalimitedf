@@ -50,14 +50,22 @@ const VerifyOTP = () => {
         }
     }, [resendCooldown]);
 
-    const handleOTPComplete = async (otpCode) => {
-        if (!email || otpCode.length !== 6) return;
+    const handleVerifyClick = async () => {
+        if (!email) {
+            toast.error('Email is required. Please return to login.');
+            return;
+        }
+        
+        if (otp.length !== 6) {
+            toast.error('Please enter the complete 6-digit code');
+            return;
+        }
 
         try {
             setIsLoading(true);
             const response = await axios.post(backendUrl + '/api/user/verify-otp', {
                 email,
-                otpCode,
+                otpCode: otp,
                 purpose
             });
 
@@ -139,7 +147,6 @@ const VerifyOTP = () => {
                 <OTPInput
                     length={6}
                     onChange={setOtp}
-                    onComplete={handleOTPComplete}
                     error={false}
                 />
             </div>
@@ -172,7 +179,7 @@ const VerifyOTP = () => {
 
             <button
                 type='button'
-                onClick={() => handleOTPComplete(otp)}
+                onClick={handleVerifyClick}
                 disabled={isLoading || otp.length !== 6 || timeRemaining === 0}
                 className={`px-8 py-2 w-full bg-green-500 text-white hover:bg-amber-500 ${isLoading || otp.length !== 6 || timeRemaining === 0 ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
             >
