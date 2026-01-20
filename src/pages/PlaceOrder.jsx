@@ -5,8 +5,10 @@ import { assets } from "../assets/assets";
 import { ShopContext } from "../context/ShopContext";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const PlaceOrder = () => {
+  const navigate = useNavigate();
   const {
     cartItems,
     setCartItems,
@@ -36,6 +38,14 @@ const PlaceOrder = () => {
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
+    
+    const token = localStorage.getItem("token");
+    if (!token) {
+      toast.error("Please login to place an order");
+      navigate("/login");
+      return;
+    }
+    
     try {
       let orderItems = [];
 
@@ -64,7 +74,7 @@ const PlaceOrder = () => {
         OrderData,
         {
           headers: {
-            token: localStorage.getItem("token"),
+            token: token,
           },
         }
       );
