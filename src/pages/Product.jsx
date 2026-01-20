@@ -37,7 +37,6 @@ const Product = () => {
     window.location.href = '/place-order';
   };
 
-  // Update image when ProductData changes
   React.useEffect(() => {
     if (initialImage) {
       setImage(initialImage);
@@ -46,37 +45,41 @@ const Product = () => {
 
   return ProductData ? (
     <div className='border-t-2 pt-10 transition-opacity ease-in duration-500 opacity-100'>
-      {/* Product Data */}
-     <div className='flex gap-12 sm:gap-12 flex-col sm:flex-row'>
-      {/* Product Image */}
-      <div className='flex-1 flex flex-col sm:flex-row gap-3'>
-        {/* Small images on the left */}
-        <div className='flex sm:flex-col overflow-x-auto sm:overflow-y-auto justify-start sm:justify-normal sm:w-[18.7%] w-full gap-2 sm:gap-3'>
-         {
-          ProductData.image.map((item,index)=>(
-            <img  onClick={() => setImage(item)} src={item} key={index} className='w-[24%] sm:w-full sm:mb-0 shrink-0 cursor-pointer border-2 border-green-500 rounded' alt=''/>
-          ))
-         }
+      <div className='flex gap-12 sm:gap-12 flex-col sm:flex-row'>
+        <div className='flex-1 flex flex-col sm:flex-row gap-3'>
+          <div className='flex sm:flex-col overflow-x-auto sm:overflow-y-auto justify-start sm:justify-normal sm:w-[18.7%] w-full gap-2 sm:gap-3'>
+            {ProductData.image.map((item,index)=>(
+              <img
+                onClick={() => setImage(item)}
+                src={item}
+                key={index}
+                className='w-[24%] sm:w-full sm:mb-0 shrink-0 cursor-pointer border-2 border-green-500 rounded'
+                alt=''
+              />
+            ))}
+          </div>
+
+          <div className='w-full sm:w-[80%] border-2 border-orange-500 rounded'>
+            <img className='w-full h-auto' src={image} alt="" />
+          </div>
         </div>
-        {/* Main image on the right */}
-        <div className='w-full sm:w-[80%] border-2 border-orange-500 rounded'>
-           <img className='w-full h-auto' src={image} alt="" />
-        </div>
-      </div>
-      {/* Product Details */}
-      <div className='flex-1'>
-       <h1 className='font-mediam text-2xl mt-2'>{ProductData.name}</h1>
-       <div className='flex items-center gap-1 mt-2'>
-         <img src={assets.starIcon} alt="" className="w-3 5" />
-         <img src={assets.starIcon} alt="" className="w-3 5" />
-         <img src={assets.starIcon} alt="" className="w-3 5" />
-         <img src={assets.starIcon} alt="" className="w-3 5" />
-         <img src={assets.starDullIcon} alt="" className="w-3 5" />
-         <p className='pl-2'>(5)</p>
-       </div>
-         <p className='mt-5 text-3xl font-medium'>{currency}{ProductData.price}</p>
-         <p className='mt-5 text-gray-500 md:w-4/5'>{ProductData.description}</p>
-         <div className='flex flex-col gap-4 my-8'>
+
+        <div className='flex-1'>
+          <h1 className='font-mediam text-2xl mt-2'>{ProductData.name}</h1>
+
+          <div className='flex items-center gap-1 mt-2'>
+            <img src={assets.starIcon} alt="" className="w-3 5" />
+            <img src={assets.starIcon} alt="" className="w-3 5" />
+            <img src={assets.starIcon} alt="" className="w-3 5" />
+            <img src={assets.starIcon} alt="" className="w-3 5" />
+            <img src={assets.starDullIcon} alt="" className="w-3 5" />
+            <p className='pl-2'>(5)</p>
+          </div>
+
+          <p className='mt-5 text-3xl font-medium'>{currency}{ProductData.price}</p>
+          <p className='mt-5 text-gray-500 md:w-4/5'>{ProductData.description}</p>
+
+          <div className='flex flex-col gap-4 my-8'>
             <div className='flex items-center gap-4'>
               <p className='text-sm font-medium'>Quantity:</p>
               <div className='flex items-center border border-gray-300 rounded'>
@@ -85,11 +88,24 @@ const Product = () => {
                 <button onClick={incrementQuantity} className='px-3 py-1 text-lg hover:bg-amber-400'>+</button>
               </div>
             </div>
+
             <div className='flex gap-4'>
-              <button onClick={() => handleAddToCart(ProductData._id)} className='bg-green-500 text-white active:bg-amber-500 hover:bg-amber-500 px-8 py-3 rounded text-sm font-medium cursor-pointer'>Add to Cart</button>
-              <button onClick={() => handleBuyNow(ProductData._id)} className='border border-green-500 text-green-500 active:bg-gray-400 px-8 py-3 rounded text-sm font-medium'>Buy Now</button>
+              <button
+                onClick={() => handleAddToCart(ProductData._id)}
+                className='bg-green-500 text-white active:bg-amber-500 hover:bg-amber-500 px-8 py-3 rounded text-sm font-medium cursor-pointer'
+              >
+                Add to Cart
+              </button>
+              <button
+                onClick={() => handleBuyNow(ProductData._id)}
+                className='border border-green-500 text-green-500 active:bg-gray-400 px-8 py-3 rounded text-sm font-medium'
+              >
+                Buy Now
+              </button>
             </div>
+
             <hr className='mt-8 sm:w-4/5' />
+
             <div className='flex items-center gap-2 mt-4'>
               <img src={assets.exchangeIcon} alt="" className='w-5' />
               <p className='text-sm text-gray-600'>7 Days Return</p>
@@ -102,25 +118,30 @@ const Product = () => {
               <img src={assets.supportImg} alt="" className='w-5' />
               <p className='text-sm text-gray-600'>24/7 Support</p>
             </div>
-         </div>
+          </div>
+        </div>
       </div>
-     </div>
-     {/* description & review section */}
-       <div className='mt-20'>
-         <div className='flex'>
-           <b className='border px-5 py-3 text-sm'>Description</b>
-           <p className='border px-5 py-3 text-sm'>Reviews (5)</p>
-         </div>
-         <div className='flex flex-col gap-4 border border-green-500 px-6 text-sm text-gray-500'>
-           <p>High Voltage Battery 102V 40Ah - Model 1 with advanced BMS protection, long cycle life, and compact design ideal for energy storage systems.</p>
-           <p>High Voltage Battery 102V 40Ah - Model 1 with advanced BMS protection, long cycle life, and compact design ideal for energy storage systems.</p>
-         </div>
-       </div>
 
-       {/* related products section */}
+      {/* description & review section */}
+      <div className='mt-20'>
+        <div className='flex'>
+          <b className='border px-5 py-3 text-sm'>Description</b>
+          <p className='border px-5 py-3 text-sm'>Reviews (5)</p>
+        </div>
+        <div className='flex flex-col gap-4 border border-green-500 px-6 text-sm text-gray-500'>
+          {ProductData.description
+            ?.split('\n')
+            .filter(line => line.trim() !== '')
+            .map((line, index) => (
+              <p key={index}>{line}</p>
+            ))}
+        </div>
+      </div>
 
-        <RelatedProducts category={ProductData.category} subCategory={ProductData.subCategory} />
-
+      <RelatedProducts
+        category={ProductData.category}
+        subCategory={ProductData.subCategory}
+      />
     </div>
   ) : <div className='opacity-0'></div>
 }
