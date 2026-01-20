@@ -6,44 +6,43 @@ const Hero = () => {
   const navigate = useNavigate();
 
   return (
-    <div>
-      <div className="relative border border-green-500 z-10">
-        {/* hero image as full-width background */}
-        <img
-          className="w-full h-[400px] sm:h-[500px] md:h-[600px] object-cover"
-          src={assets.hero}
-          alt="Solar installation"
-        />
-        
-        {/* left side content positioned over the image */}
-        <div className="absolute inset-0 flex items-center justify-start py-4 sm:py-10 px-4 sm:px-8 md:px-12 lg:px-16 ">
-          <div className="text-[#414141] max-w-xs sm:max-w-sm md:max-w-lg bg-white/80 backdrop-blur-sm p-4 sm:p-6 md:p-8 rounded-lg z-20">
-            <div className="flex items-center gap-2">
-              <p className="w-6 sm:w-8 md:w-11 h-0.5 bg-[#414141]"></p>
-              <p className="font-medium text-xs sm:text-sm md:text-base">
-                Lighting Africa, Powering Possibilities
-              </p>
-            </div>
+    <div className="relative">
+      {/* Hero image */}
+      <img
+        className="w-full h-[400px] sm:h-[500px] md:h-[600px] object-cover"
+        src={assets.hero}
+        alt="Solar installation"
+      />
 
-            <h1 className="text-xl sm:text-2xl md:text-3xl py-2 sm:py-3 text-gray-500 leading-relaxed">
-              Wholesale & Retail Solar Solutions <br />
-              Installation, Maintenance, and <br />
-              Sustainable Energy for Every Space.
-            </h1>
+      {/* Dark overlay */}
+      <div className="absolute inset-0 bg-black/40"></div>
 
-            <div className="flex items-center gap-2 mt-4">
-              <button
-                onClick={() => navigate("/collection")}
-                className="font-semibold text-xs sm:text-sm md:text-base cursor-pointer hover:text-green-600 transition-colors"
-              >
-                SHOP NOW
-              </button>
-              <p className="w-6 sm:w-8 md:w-11 h-px bg-[#414141]"></p>
-            </div>
+      {/* Left content */}
+      <div className="absolute inset-0 flex items-center justify-start px-4 sm:px-8 md:px-12 lg:px-16 z-10">
+        <div className="max-w-md text-white">
+          {/* Tagline */}
+          <div className="flex items-center gap-2 mb-2">
+            <span className="w-8 h-[2px] bg-green-400"></span>
+            <p className="text-[10px] sm:text-xs md:text-sm uppercase tracking-wide">
+              Lighting Africa, Powering Possibilities
+            </p>
           </div>
+
+          {/* Main heading */}
+          <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold leading-snug mb-4">
+            Wholesale & Retail Solar Solutions 
+          </h1>
+
+          {/* CTA */}
+          <button
+            onClick={() => navigate("/collection")}
+            className="group inline-flex items-center gap-2 border border-green-400 px-4 py-2 text-xs sm:text-sm md:text-base font-semibold hover:bg-green-500 hover:text-black transition-all"
+          >
+            SHOP NOW
+            <span className="w-5 h-[2px] bg-green-400 group-hover:bg-black transition-all"></span>
+          </button>
         </div>
       </div>
-      {/* Quote widget removed from here - it's now fixed to viewport */}
     </div>
   );
 };
