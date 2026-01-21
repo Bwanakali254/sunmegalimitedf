@@ -76,6 +76,20 @@ const VerifyOTP = () => {
                     localStorage.setItem('token', response.data.token);
                     toast.success('Email verified successfully! Welcome to Sun Mega!');
                     navigate('/');
+                } else if (purpose === 'password_change') {
+                    // Redirect to reset password page with email and OTP
+                    toast.success('Code verified! Please enter your new password.');
+                    navigate(`/reset-password?email=${encodeURIComponent(email)}&otp=${encodeURIComponent(otp)}`);
+                } else if (purpose === 'account_delete') {
+                    // Log user out and redirect to home
+                    toast.success('Account deleted successfully');
+                    setToken('');
+                    localStorage.removeItem('token');
+                    navigate('/');
+                } else if (purpose === 'email_change') {
+                    // Redirect back to profile
+                    toast.success(response.data.message || 'Email updated successfully');
+                    navigate('/profile');
                 } else {
                     toast.success(response.data.message || 'Verified successfully!');
                     navigate('/profile');

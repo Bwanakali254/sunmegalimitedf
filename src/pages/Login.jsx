@@ -146,7 +146,13 @@ useEffect(() => {
          </div>
        ) : ''}
        <div className='w-full flex justify-between text-sm mt-[-8px]'>
-         <p className='cursor-pointer text-gray-500'>Forgot Password?</p>
+         {currentState === 'Login' ? (
+           <p onClick={() => navigate('/forgot-password')} className='cursor-pointer text-gray-500 hover:text-black'>
+             Forgot Password?
+           </p>
+         ) : (
+           <p className='invisible'>Placeholder</p>
+         )}
          {
           currentState === 'Login' 
           ? <p onClick={() => setCurrentState('Sign Up')} className='cursor-pointer'>Create Account</p> 

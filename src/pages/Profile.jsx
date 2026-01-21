@@ -24,6 +24,10 @@ const Profile = () => {
     const [isSendingVerification, setIsSendingVerification] = useState(false);
     const [isProfileLoading, setIsProfileLoading] = useState(false);
     const [profileError, setProfileError] = useState(null);
+    const [newEmail, setNewEmail] = useState('');
+    const [isChangingEmail, setIsChangingEmail] = useState(false);
+    const [deletePassword, setDeletePassword] = useState('');
+    const [isDeletingAccount, setIsDeletingAccount] = useState(false);
 
     // Load user data when component mounts or user changes
     useEffect(() => {
@@ -177,6 +181,82 @@ const Profile = () => {
         }
     };
 
+    const handleEmailChangeRequest = async (e) => {
+        e.preventDefault();
+        if (!token || !newEmail) return;
+
+        // Basic email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(newEmail)) {
+            toast.error('Please enter a valid email address');
+            return;
+        }
+
+        try {
+            setIsChangingEmail(true);
+            const response = await axios.post(
+                backendUrl + '/api/user/request-email-change',
+                { newEmail },
+                { headers: { token } }
+            );
+
+            if (response.data.success) {
+                toast.success(response.data.message);
+                // Redirect to OTP verification with new email
+                navigate(`/verify-otp?email=${encodeURIComponent(newEmail)}&purpose=email_change`);
+            } else {
+                toast.error(response.data.message || 'Failed to request email change');
+            }
+            setIsChangingEmail(false);
+        } catch (error) {
+            console.log(error);
+            toast.error(error.response?.data?.message || error.message || 'Failed to request email change');
+            setIsChangingEmail(false);
+        }
+    };
+
+    const handleAccountDeletionRequest = async (e) => {
+        e.preventDefault();
+        if (!token || !deletePassword) return;
+
+        // Confirm with user
+        const confirmDelete = window.confirm(
+            'Are you absolutely sure you want to delete your account?\n\n' +
+            'This action is PERMANENT and CANNOT be undone.\n\n' +
+            'All your data will be permanently removed:\n' +
+            '- Personal information\n' +
+            '- Order history\n' +
+            '- Account preferences\n\n' +
+            'Click OK to proceed with account deletion.'
+        );
+
+        if (!confirmDelete) {
+            return;
+        }
+
+        try {
+            setIsDeletingAccount(true);
+            const response = await axios.post(
+                backendUrl + '/api/user/request-account-delete',
+                { password: deletePassword },
+                { headers: { token } }
+            );
+
+            if (response.data.success) {
+                toast.success(response.data.message);
+                // Redirect to OTP verification with current email
+                navigate(`/verify-otp?email=${encodeURIComponent(user.email)}&purpose=account_delete`);
+            } else {
+                toast.error(response.data.message || 'Failed to process account deletion');
+            }
+            setIsDeletingAccount(false);
+        } catch (error) {
+            console.log(error);
+            toast.error(error.response?.data?.message || error.message || 'Failed to process account deletion');
+            setIsDeletingAccount(false);
+        }
+    };
+
     if (!token) {
         return null; // Will redirect via useEffect
     }
@@ -247,7 +327,7 @@ const Profile = () => {
                         />
                     </div>
                     <div>
-                        <label className='block text-sm font-medium text-gray-700 mb-1'>Email</label>
+                        <label className='block text-sm font-medium text-gray-700 mb-1'>Current Email</label>
                         <input
                             type='email'
                             value={user?.email || ''}
@@ -255,9 +335,30 @@ const Profile = () => {
                             readOnly
                             disabled
                         />
-                        <p className='text-xs text-gray-500 mt-1'>
-                            Email cannot be changed
+                    </div>
+                    <div className='bg-amber-50 border border-amber-200 rounded-lg p-4'>
+                        <h3 className='text-sm font-semibold text-gray-700 mb-2'>Change Email Address</h3>
+                        <p className='text-xs text-gray-600 mb-3'>
+                            Enter a new email address. You'll need to verify it with a code sent to the new email.
                         </p>
+                        <form onSubmit={handleEmailChangeRequest} className='space-y-3'>
+                            <input
+                                type='email'
+                                value={newEmail}
+                                onChange={(e) => setNewEmail(e.target.value)}
+                                className='w-full px-3 py-2 border border-amber-300 rounded'
+                                placeholder='Enter new email address'
+                                required
+                                disabled={isChangingEmail}
+                            />
+                            <button
+                                type='submit'
+                                disabled={isChangingEmail || !newEmail}
+                                className={`bg-amber-500 hover:bg-amber-600 text-white px-6 py-2 rounded text-sm ${isChangingEmail || !newEmail ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+                            >
+                                {isChangingEmail ? 'Sending Code...' : 'Send Verification Code'}
+                            </button>
+                        </form>
                     </div>
                     <div>
                         <label className='block text-sm font-medium text-gray-700 mb-1'>Phone</label>
@@ -429,6 +530,55 @@ const Profile = () => {
                     </button>
                 </form>
             </div>
+
+            {/* Delete Account Section */}
+            {user?.authProvider === 'email' && (
+                <div className='bg-white border border-red-300 rounded-lg p-6 mb-6'>
+                    <h2 className='font-semibold text-xl text-red-700 mb-4 border-b border-red-200 pb-2'>
+                        Delete Account
+                    </h2>
+                    <div className='bg-red-50 border border-red-200 rounded-lg p-4 mb-4'>
+                        <div className='flex items-start gap-3'>
+                            <svg className='w-6 h-6 text-red-600 shrink-0 mt-0.5' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                                <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z' />
+                            </svg>
+                            <div>
+                                <h3 className='text-sm font-semibold text-red-800 mb-1'>Warning: This action is permanent</h3>
+                                <p className='text-xs text-red-700 leading-relaxed'>
+                                    Deleting your account will permanently remove all your personal data, order history, and preferences. 
+                                    This action cannot be undone.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <form onSubmit={handleAccountDeletionRequest} className='space-y-4'>
+                        <div>
+                            <label className='block text-sm font-medium text-gray-700 mb-2'>
+                                Enter your password to confirm account deletion
+                            </label>
+                            <input
+                                type='password'
+                                value={deletePassword}
+                                onChange={(e) => setDeletePassword(e.target.value)}
+                                className='w-full px-3 py-2 border border-red-300 rounded focus:border-red-500 focus:ring-1 focus:ring-red-500'
+                                placeholder='Enter your password'
+                                required
+                                disabled={isDeletingAccount}
+                            />
+                            <p className='text-xs text-gray-500 mt-2'>
+                                You will receive a verification code to confirm deletion.
+                            </p>
+                        </div>
+                        <button
+                            type='submit'
+                            disabled={isDeletingAccount || !deletePassword}
+                            className={`bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded font-medium ${isDeletingAccount || !deletePassword ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+                        >
+                            {isDeletingAccount ? 'Processing...' : 'Delete My Account'}
+                        </button>
+                    </form>
+                </div>
+            )}
         </div>
     );
 };
