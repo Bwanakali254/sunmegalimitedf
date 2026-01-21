@@ -162,7 +162,7 @@ useEffect(() => {
        <button 
          type='submit' 
          disabled={isLoading}
-         className={`px-8 py-2 w-full bg-green-500 text-white hover:bg-amber-500 ${isLoading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+         className={`w-full py-2 bg-green-500 text-white hover:bg-amber-500 ${isLoading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
        >
          {isLoading && currentState === 'Sign Up' ? 'Signing Up...' : (currentState === 'Login' ? 'Sign In' : 'Sign Up')}
        </button>

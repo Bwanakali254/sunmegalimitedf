@@ -40,11 +40,36 @@ const GoogleSignIn = () => {
     };
 
     return (
-        <GoogleLogin
-            onSuccess={handleSuccess}
-            onError={handleError}
-            useOneTap={false}
-        />
+        <div className="w-full">
+            <style>
+                {`
+                    .google-signin-wrapper {
+                        width: 100% !important;
+                    }
+                    .google-signin-wrapper > div {
+                        width: 100% !important;
+                        display: flex !important;
+                        justify-content: center !important;
+                    }
+                    .google-signin-wrapper > div > div {
+                        width: 100% !important;
+                    }
+                    .google-signin-wrapper button,
+                    .google-signin-wrapper > div > div > button,
+                    .google-signin-wrapper iframe + div button {
+                        width: 100% !important;
+                        max-width: 100% !important;
+                    }
+                `}
+            </style>
+            <div className="google-signin-wrapper w-full">
+                <GoogleLogin
+                    onSuccess={handleSuccess}
+                    onError={handleError}
+                    useOneTap={false}
+                />
+            </div>
+        </div>
     );
 };
 
