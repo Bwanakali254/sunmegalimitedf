@@ -173,7 +173,7 @@ useEffect(() => {
          <span className='text-gray-500 text-sm'>OR</span>
          <hr className='flex-1 border-gray-300'/>
        </div>
-       <div className='w-full'>
+       <div className='w-full flex justify-center'>
          <GoogleSignIn />
        </div>
     </form>
