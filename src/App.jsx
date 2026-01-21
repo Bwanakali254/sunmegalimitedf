@@ -11,6 +11,8 @@ import PlaceOrder from "./pages/PlaceOrder";
 import Orders from "./pages/Orders";
 import Profile from "./pages/Profile";
 import VerifyOTP from "./pages/VerifyOTP";
+import Privacy from "./pages/Privacy";
+import Terms from "./pages/Terms";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import SearchBar from "./components/SearchBar";
@@ -40,6 +42,8 @@ const App = () => {
           <Route path="/profile" element={<Profile />} />
           <Route path="/verify-otp" element={<VerifyOTP />} />
           <Route path="/payment-callback" element={<PaymentCallback />} />
+          <Route path="/privacy-policy" element={<Privacy />} />
+          <Route path="/terms-and-conditions" element={<Terms />} />
         </Routes>
       </ErrorBoundary>
       <Footer />
