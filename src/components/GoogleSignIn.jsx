@@ -40,13 +40,11 @@ const GoogleSignIn = () => {
     };
 
     return (
-        <div className="w-full">
-            <GoogleLogin
-                onSuccess={handleSuccess}
-                onError={handleError}
-                useOneTap={false}
-            />
-        </div>
+        <GoogleLogin
+            onSuccess={handleSuccess}
+            onError={handleError}
+            useOneTap={false}
+        />
     );
 };
 
