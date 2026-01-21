@@ -68,14 +68,6 @@ const Navbar = () => {
             
         </div>
         
-        {/* Backdrop Overlay */}
-        {visible && (
-          <div 
-            className='fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300'
-            onClick={() => setVisible(false)}
-          />
-        )}
-
         {/* Sidebar Menu for small screens */}
         <div className={`fixed top-0 right-0 h-full bg-white shadow-2xl transition-all duration-300 ease-in-out z-50 ${visible ? 'w-[280px]' : 'w-0'}`}>
            <div className='flex flex-col h-full'>
