@@ -15,6 +15,7 @@ import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import CookieBanner from "./components/CookieBanner";
 import SearchBar from "./components/SearchBar";
 import { ToastContainer } from "react-toastify";
 import ErrorBoundary from "./components/ErrorBoundary";
@@ -46,6 +47,7 @@ const App = () => {
           <Route path="/terms-and-conditions" element={<Terms />} />
         </Routes>
       </ErrorBoundary>
+      <CookieBanner />
       <Footer />
     </div>
   );
