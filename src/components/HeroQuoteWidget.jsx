@@ -156,7 +156,6 @@ const HeroQuoteWidget = () => {
             }
             setIsLoading(false);
         } catch (error) {
-            console.log(error);
             toast.error(error.response?.data?.message || error.message || 'Failed to submit quote request');
             setIsLoading(false);
         }

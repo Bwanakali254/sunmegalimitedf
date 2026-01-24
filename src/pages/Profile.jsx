@@ -91,7 +91,6 @@ const Profile = () => {
             }
             setIsLoadingBasic(false);
         } catch (error) {
-            console.log(error);
             toast.error(error.response?.data?.message || error.message || 'Failed to update');
             setIsLoadingBasic(false);
         }
@@ -121,7 +120,6 @@ const Profile = () => {
             }
             setIsLoadingAddress(false);
         } catch (error) {
-            console.log(error);
             toast.error(error.response?.data?.message || error.message || 'Failed to update');
             setIsLoadingAddress(false);
         }
@@ -151,7 +149,6 @@ const Profile = () => {
             }
             setIsLoadingPreferences(false);
         } catch (error) {
-            console.log(error);
             toast.error(error.response?.data?.message || error.message || 'Failed to update');
             setIsLoadingPreferences(false);
         }
@@ -175,7 +172,6 @@ const Profile = () => {
             }
             setIsSendingVerification(false);
         } catch (error) {
-            console.log(error);
             toast.error(error.response?.data?.message || error.message || 'Failed to send verification');
             setIsSendingVerification(false);
         }
@@ -209,7 +205,6 @@ const Profile = () => {
             }
             setIsChangingEmail(false);
         } catch (error) {
-            console.log(error);
             toast.error(error.response?.data?.message || error.message || 'Failed to request email change');
             setIsChangingEmail(false);
         }
@@ -251,7 +246,6 @@ const Profile = () => {
             }
             setIsDeletingAccount(false);
         } catch (error) {
-            console.log(error);
             toast.error(error.response?.data?.message || error.message || 'Failed to process account deletion');
             setIsDeletingAccount(false);
         }

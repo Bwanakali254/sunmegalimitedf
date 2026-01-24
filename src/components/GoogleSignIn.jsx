@@ -30,7 +30,6 @@ const GoogleSignIn = () => {
                 toast.error(response.data.message || 'Google authentication failed');
             }
         } catch (error) {
-            console.error('Google auth error:', error);
             toast.error(error.response?.data?.message || error.message || 'Google authentication failed');
         }
     };

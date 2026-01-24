@@ -83,7 +83,6 @@ const PlaceOrder = () => {
         window.location.href = res.data.redirect_url;
       }
     } catch (error) {
-      console.log(error);
       toast.error(error.message);
     }
   };

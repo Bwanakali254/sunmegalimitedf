@@ -52,7 +52,6 @@ const ShopContextProvider = (props) => {
                 
 
             } catch (error) {
-                console.log(error)
                 toast.error(error.message)
             }
 
@@ -105,7 +104,6 @@ const ShopContextProvider = (props) => {
                 await axios.post(backendUrl + '/api/cart/update', {itemId, sizeKey, newQuantity}, {headers:{token}})
                 
             } catch (error) {
-                console.log(error)
                 toast.error(error.message)
             }
         }
@@ -144,7 +142,6 @@ const ShopContextProvider = (props) => {
              }
 
         } catch (error) {
-            console.log(error)
             toast.error(error.message)
         }
     }
@@ -158,7 +155,6 @@ const ShopContextProvider = (props) => {
             }
 
         } catch (error) {
-            console.log(error)
             toast.error(error.message)
         }
     }
@@ -178,7 +174,6 @@ const ShopContextProvider = (props) => {
                 throw new Error(response.data.message || 'Failed to fetch profile');
             }
         } catch (error) {
-            console.log(error);
             // Re-throw so Profile page can handle it
             throw error;
         }

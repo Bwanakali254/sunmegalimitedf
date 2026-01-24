@@ -63,7 +63,6 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     }
     
   } catch (error) {
-     console.log(error);
      toast.error(error.message);
      if(currentState === 'Sign Up'){
        setIsLoading(false);

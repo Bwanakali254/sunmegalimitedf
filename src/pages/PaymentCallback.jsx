@@ -15,7 +15,7 @@ const PaymentCallback = () => {
     }
 
     axios
-      .get(`${import.meta.env.VITE_BACKEND_URL}/api/pesapal/status`, {
+      .get(`${import.meta.env.VITE_BACKEND_URL}/api/pesapal/verify`, {
         params: { orderTrackingId },
       })
       .then((res) => {

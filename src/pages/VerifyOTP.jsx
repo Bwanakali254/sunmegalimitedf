@@ -99,7 +99,6 @@ const VerifyOTP = () => {
             }
             setIsLoading(false);
         } catch (error) {
-            console.log(error);
             toast.error(error.response?.data?.message || error.message || 'Verification failed');
             setIsLoading(false);
         }
@@ -125,7 +124,6 @@ const VerifyOTP = () => {
             }
             setIsResending(false);
         } catch (error) {
-            console.log(error);
             toast.error(error.response?.data?.message || error.message || 'Failed to send code');
             setIsResending(false);
         }
